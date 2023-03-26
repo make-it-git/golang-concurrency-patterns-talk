@@ -9,7 +9,7 @@ type empty struct{}
 
 const N = 4
 
-func calculate(i int, val int) int {
+func calculate(val int) int {
 	time.Sleep(time.Millisecond * 500)
 	return val * 2
 }
@@ -27,7 +27,7 @@ func main() {
 
 	for i, xi := range data {
 		go func(i int, xi int) {
-			results[i] = calculate(i, xi)
+			results[i] = calculate(xi)
 			semaphore <- empty{}
 		}(i, xi)
 	}
