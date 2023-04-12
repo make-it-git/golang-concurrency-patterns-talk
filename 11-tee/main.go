@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func tee(ctx context.Context, input <-chan string, outputs []chan string) {
+func tee(ctx context.Context, input <-chan string, outputs []chan<- string) {
 	for elem := range input {
 		elem := elem
 		for _, out := range outputs {
@@ -28,7 +28,7 @@ func main() {
 	out1 := make(chan string)
 	out2 := make(chan string)
 	ctx, cancel := context.WithCancel(context.Background())
-	outputs := []chan string{
+	outputs := []chan<- string{
 		out1, out2,
 	}
 
