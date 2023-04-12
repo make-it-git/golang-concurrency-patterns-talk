@@ -26,7 +26,7 @@ func main() {
 }
 
 func makeGenerator(done <-chan struct{}, wg *sync.WaitGroup) <-chan int {
-	ch := make(chan int)
+	ch := make(chan int, 1)
 	var i = 0
 
 	go func() {

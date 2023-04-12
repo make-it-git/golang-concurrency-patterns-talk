@@ -7,7 +7,7 @@ import (
 
 type empty struct{}
 
-const N = 4
+const DATA_SIZE = 4
 
 func calculate(val int) int {
 	time.Sleep(time.Millisecond * 500)
@@ -15,12 +15,12 @@ func calculate(val int) int {
 }
 
 func main() {
-	data := make([]int, 0, N)
-	for i := 0; i < N; i++ {
+	data := make([]int, 0, DATA_SIZE)
+	for i := 0; i < DATA_SIZE; i++ {
 		data = append(data, i+10)
 	}
-	results := make([]int, N)
-	semaphore := make(chan empty, N)
+	results := make([]int, DATA_SIZE)
+	semaphore := make(chan empty, DATA_SIZE)
 
 	fmt.Printf("Before: %v\n", data)
 	start := time.Now()
@@ -31,7 +31,7 @@ func main() {
 			semaphore <- empty{}
 		}(i, xi)
 	}
-	for i := 0; i < N; i++ {
+	for i := 0; i < DATA_SIZE; i++ {
 		<-semaphore
 	}
 
