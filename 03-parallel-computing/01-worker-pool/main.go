@@ -5,7 +5,7 @@ import (
 	"sync"
 )
 
-const totalJobs = 4
+const totalJobs = 10
 const totalWorkers = 2
 
 func main() {

@@ -17,6 +17,7 @@ type ringBuffer struct {
 }
 
 func (r *ringBuffer) Run() {
+	defer close(r.outCh)
 	for v := range r.inCh {
 		select {
 		case r.outCh <- v:
@@ -25,7 +26,6 @@ func (r *ringBuffer) Run() {
 			r.outCh <- v
 		}
 	}
-	close(r.outCh)
 }
 
 func main() {
