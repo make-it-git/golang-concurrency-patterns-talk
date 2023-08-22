@@ -76,13 +76,25 @@ func main() {
 	consumer("C2", producers, done, &wg, fanIn2)
 
 	go func() {
+		f1Done := false
+		f2Done := false
 		for {
 			select {
 			case <-done:
-				return
-			case v := <-fanIn1:
+				if f1Done && f2Done {
+					return
+				}
+			case v, ok := <-fanIn1:
+				if !ok {
+					f1Done = true
+					continue
+				}
 				fmt.Printf("fanIn1 got %v\n", v)
-			case v := <-fanIn2:
+			case v, ok := <-fanIn2:
+				if !ok {
+					f2Done = true
+					continue
+				}
 				fmt.Printf("fanIn2 got %v\n", v)
 			}
 		}
