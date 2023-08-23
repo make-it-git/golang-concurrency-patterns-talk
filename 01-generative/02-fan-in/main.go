@@ -72,10 +72,17 @@ func main() {
 
 	go func() {
 		for {
+			fanInDone := false
 			select {
 			case <-done:
+				if !fanInDone {
+					continue
+				}
 				return
-			case v := <-fanIn:
+			case v, ok := <-fanIn:
+				if !ok {
+					fanInDone = true
+				}
 				fmt.Printf("fanIn got %v\n", v)
 			}
 		}
