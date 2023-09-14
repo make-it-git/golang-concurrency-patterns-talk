@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sync"
 )
 
 const totalJobs = 10
@@ -32,14 +31,8 @@ func main() {
 }
 
 func worker(id int, jobs <-chan int, results chan<- int) {
-	var wg sync.WaitGroup
-
 	for j := range jobs {
-		wg.Add(1)
-
 		go func(job int) {
-			defer wg.Done()
-
 			fmt.Printf("Worker %d started job %d\n", id, job)
 
 			// Do work and send result
@@ -49,6 +42,4 @@ func worker(id int, jobs <-chan int, results chan<- int) {
 			fmt.Printf("Worker %d finished job %d\n", id, job)
 		}(j)
 	}
-
-	wg.Wait()
 }
