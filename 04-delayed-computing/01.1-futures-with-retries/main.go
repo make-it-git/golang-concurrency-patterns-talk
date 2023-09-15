@@ -47,9 +47,9 @@ func main() {
 
 	fmt.Println("Requests started")
 
-	body1 := <-future1
-	body2 := <-future2
+	response1 := <-future1
+	response2 := <-future2
 
-	fmt.Printf("Response 1: %v\n", body1)
-	fmt.Printf("Response 2: %v\n", body2)
+	fmt.Printf("Response 1: %v\n", response1)
+	fmt.Printf("Response 2: %v\n", response2)
 }
